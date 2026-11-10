@@ -219,16 +219,19 @@ const houseSchema = new mongoose_1.Schema({
         subCategory: { type: String, trim: true },
         material: { type: String, trim: true },
         grade: { type: String, trim: true },
+        woodType: { type: String, trim: true },
+        fabric: { type: String, trim: true },
+        colorFinish: { type: String, trim: true },
+        assemblyRequired: { type: Boolean, default: false },
+        roomType: { type: String, trim: true },
         dimensions: { type: String, trim: true },
         unit: { type: String, default: 'Piece' },
         weight: { type: String, trim: true },
         stockQuantity: { type: Number, default: 100, min: 0 },
         leadTime: { type: String, default: 'In Stock / Ready for Dispatch' },
+        leadTimeDays: { type: Number, default: 3 },
         warranty: { type: String, default: 'Standard Manufacturer Warranty' },
-        specifications: [{
-                key: String,
-                value: String
-            }]
+        specifications: { type: mongoose_1.default.Schema.Types.Mixed, default: '' }
     },
     pricing: {
         price: { type: Number, required: true, min: 0 },

@@ -12,6 +12,7 @@ const auth_1 = __importDefault(require("./routes/auth"));
 const accountant_1 = __importDefault(require("./routes/accountant"));
 const banks_1 = __importDefault(require("./routes/banks"));
 const houseRoutes_1 = __importDefault(require("./routes/houseRoutes"));
+const furnitureRoutes_1 = __importDefault(require("./routes/furnitureRoutes"));
 const orderRoutes_1 = __importDefault(require("./routes/orderRoutes"));
 const menuRoutes_1 = __importDefault(require("./routes/menuRoutes"));
 const messageRoutes_1 = __importDefault(require("./routes/messageRoutes"));
@@ -21,15 +22,12 @@ const user_1 = __importDefault(require("./routes/user"));
 const wallet_1 = __importDefault(require("./routes/wallet"));
 const transactions_1 = __importDefault(require("./routes/transactions"));
 const loanRoutes_1 = __importDefault(require("./routes/loanRoutes"));
-const foodRoutes_1 = __importDefault(require("./routes/foodRoutes"));
 const feedback_1 = __importDefault(require("./routes/feedback"));
 const propertyFeatureRoutes_1 = __importDefault(require("./routes/propertyFeatureRoutes"));
 const reviewReportRoutes_1 = __importDefault(require("./routes/reviewReportRoutes"));
 const workflowRoutes_1 = __importDefault(require("./routes/workflowRoutes"));
 const database_1 = require("./config/database");
 const errorHandler_1 = require("./middleware/errorHandler");
-// Import image serving controllers
-const foodController_1 = require("./controllers/foodController");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const server = (0, http_1.createServer)(app);
@@ -62,12 +60,8 @@ app.options('*', (0, cors_1.default)({
 }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-// BACKWARD COMPATIBILITY ROUTES - Serve images from database
-// These routes intercept old upload URLs and serve images from MongoDB
-app.get('/uploads/foods/:filename', foodController_1.serveFoodImage);
 // API Routes
 app.use('/api/user', user_1.default);
-app.use('/api/foods', foodRoutes_1.default);
 app.use('/api/loans', loanRoutes_1.default);
 app.use('/api/wallet', wallet_1.default);
 app.use('/api/transactions', transactions_1.default);
@@ -75,6 +69,7 @@ app.use('/api/auth', auth_1.default);
 app.use('/api/agent', agent_1.default);
 app.use('/api/feedback', feedback_1.default);
 app.use('/api/houses', houseRoutes_1.default);
+app.use('/api/furniture', furnitureRoutes_1.default);
 app.use('/api/orders', orderRoutes_1.default);
 app.use('/api/menu', menuRoutes_1.default);
 app.use('/api/messages', messageRoutes_1.default);

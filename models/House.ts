@@ -129,13 +129,19 @@ export interface IHouse extends Document {
     subCategory?: string;
     material?: string;
     grade?: string;
+    woodType?: string;
+    fabric?: string;
+    colorFinish?: string;
+    assemblyRequired?: boolean;
+    roomType?: string;
     dimensions?: string;
     unit?: string;
     weight?: string;
     stockQuantity?: number;
     leadTime?: string;
+    leadTimeDays?: number;
     warranty?: string;
-    specifications?: Array<{ key: string; value: string }>;
+    specifications?: any;
   };
   pricing: {
     price: number;
@@ -332,16 +338,19 @@ const houseSchema = new Schema<IHouse>({
     subCategory: { type: String, trim: true },
     material: { type: String, trim: true },
     grade: { type: String, trim: true },
+    woodType: { type: String, trim: true },
+    fabric: { type: String, trim: true },
+    colorFinish: { type: String, trim: true },
+    assemblyRequired: { type: Boolean, default: false },
+    roomType: { type: String, trim: true },
     dimensions: { type: String, trim: true },
     unit: { type: String, default: 'Piece' },
     weight: { type: String, trim: true },
     stockQuantity: { type: Number, default: 100, min: 0 },
     leadTime: { type: String, default: 'In Stock / Ready for Dispatch' },
+    leadTimeDays: { type: Number, default: 3 },
     warranty: { type: String, default: 'Standard Manufacturer Warranty' },
-    specifications: [{
-      key: String,
-      value: String
-    }]
+    specifications: { type: mongoose.Schema.Types.Mixed, default: '' }
   },
   pricing: {
     price: { type: Number, required: true, min: 0 },

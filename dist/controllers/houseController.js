@@ -330,6 +330,9 @@ const createHouse = async (req, res) => {
             parsedPanoramic360 = parseJsonField(panoramic360);
             parsedFloorPlan = parseJsonField(floorPlan);
             parsedProductAttributes = parseJsonField(req.body.productAttributes);
+            if (parsedProductAttributes && typeof parsedProductAttributes === 'object' && typeof parsedProductAttributes.specifications === 'string') {
+                parsedProductAttributes.specifications = parsedProductAttributes.specifications.trim();
+            }
         }
         catch (e) {
             return errorResponse(res, e.message || 'Invalid JSON data in request', 400);
@@ -449,8 +452,13 @@ const updateHouse = async (req, res) => {
                 updateData.panoramic360 = parseJsonField(body.panoramic360);
             if (body.floorPlan !== undefined)
                 updateData.floorPlan = parseJsonField(body.floorPlan);
-            if (body.productAttributes !== undefined)
-                updateData.productAttributes = parseJsonField(body.productAttributes);
+            if (body.productAttributes !== undefined) {
+                const parsedAttrs = parseJsonField(body.productAttributes);
+                if (parsedAttrs && typeof parsedAttrs === 'object' && typeof parsedAttrs.specifications === 'string') {
+                    parsedAttrs.specifications = parsedAttrs.specifications.trim();
+                }
+                updateData.productAttributes = parsedAttrs;
+            }
         }
         catch (e) {
             return errorResponse(res, e.message || 'Invalid JSON data in request', 400);

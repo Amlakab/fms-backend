@@ -8,6 +8,7 @@ import authRoutes from './routes/auth';
 import accountantRoutes from './routes/accountant';
 import bankRoutes from './routes/banks';
 import houseRoutes from './routes/houseRoutes';
+import furnitureRoutes from './routes/furnitureRoutes';
 import orderRoutes from './routes/orderRoutes';
 import menuRoutes from './routes/menuRoutes';
 import messageRoutes from './routes/messageRoutes';
@@ -17,7 +18,6 @@ import userRoutes from './routes/user';
 import walletRoutes from './routes/wallet';
 import transactionRoutes from './routes/transactions';
 import loanRoutes from './routes/loanRoutes';
-import foodRoutes from './routes/foodRoutes';
 import feedbackRoutes from './routes/feedback';
 import propertyFeatureRoutes from './routes/propertyFeatureRoutes';
 import reviewReportRoutes from './routes/reviewReportRoutes';
@@ -25,8 +25,7 @@ import workflowRoutes from './routes/workflowRoutes';
 import { connectDB } from './config/database';
 import { errorHandler } from './middleware/errorHandler';
 
-// Import image serving controllers
-import { serveFoodImage } from './controllers/foodController';
+
 
 dotenv.config();
 
@@ -67,13 +66,8 @@ app.options('*', cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// BACKWARD COMPATIBILITY ROUTES - Serve images from database
-// These routes intercept old upload URLs and serve images from MongoDB
-app.get('/uploads/foods/:filename', serveFoodImage);
-
 // API Routes
 app.use('/api/user', userRoutes);
-app.use('/api/foods', foodRoutes);
 app.use('/api/loans', loanRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/transactions', transactionRoutes);
@@ -81,6 +75,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/agent', agentRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/houses', houseRoutes);
+app.use('/api/furniture', furnitureRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/messages', messageRoutes);
